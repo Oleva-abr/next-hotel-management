@@ -2,6 +2,10 @@
 import { FcGoogle } from "react-icons/fc";
 import { AiFillGithub } from "react-icons/ai";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { signUp } from "next-auth-sanity/client";
+import { signIn, useSession } from "next-auth/react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const defaultFormData = {
   email: "",
@@ -19,12 +23,14 @@ function Auth() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      console.log(formData);
+      const user = await signUp(formData);
+      toast.success("Success. Please sign in");
     } catch (error) {
       console.log(error);
+      toast.error("Something wen't wrong");
     } finally {
       setFormData(defaultFormData);
     }
@@ -55,6 +61,17 @@ function Auth() {
             value={formData.email}
             onChange={handleInputChange}
           />
+
+          <input
+            type="text"
+            name="name"
+            placeholder="John Doe"
+            required
+            className={inputStyles}
+            value={formData.name}
+            onChange={handleInputChange}
+          />
+
           <input
             type="password"
             name="password"
@@ -63,15 +80,6 @@ function Auth() {
             minLength={6}
             className={inputStyles}
             value={formData.password}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="name"
-            placeholder="John Doe"
-            required
-            className={inputStyles}
-            value={formData.name}
             onChange={handleInputChange}
           />
           <button
