@@ -14,23 +14,23 @@ function Header() {
   const { data: session } = useSession();
 
   return (
-    <header className="py-10 px-4 container mx-auto flex flex-wrap md:flex-nowrap items-center justify-between">
-      <div className="flex item-center w-full md:2/3">
+    <header className="py-10 px-4 container mx-auto text-xl flex flex-wrap md:flex-nowrap items-center justify-between">
+      <div className="flex items-center w-full md:2/3">
         <Link href="/" className="font-black text-tertiary-dark">
-          {" "}
-          Hotels
+          Hotelzz
         </Link>
         <ul className="flex items-center ml-5">
           <li className="flex items-center">
             {session?.user ? (
               <Link href={`/users/${session.user.id}`}>
                 {session.user.image ? (
-                  <div className="w-5 h-5 rounded-full overflow-hidden">
+                  <div className="w-10 h-10 rounded-full overflow-hidden">
                     <Image
                       src={session.user.image}
                       alt={session.user.name!}
-                      width={20}
-                      height={20}
+                      width={40}
+                      height={40}
+                      className="scale-animation img"
                     />
                   </div>
                 ) : (
