@@ -8,7 +8,7 @@ const nextConfig = {
       "plus.unsplash.com",
     ],
   },
-  remotePatterns: ["https://unsplash.com/.*"],
+  // remotePatterns: ["https://unsplash.com/.*"],
 };
 
 module.exports = nextConfig;

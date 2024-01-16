@@ -6,14 +6,14 @@ type Props = {
   roomTypeFilter: string;
   searchQuery: string;
   setRoomTypeFilter: (value: string) => void;
-  sethSearchQuery: (value: string) => void;
+  setSearchQuery: (value: string) => void;
 };
 
 const Search: FC<Props> = ({
   roomTypeFilter,
   searchQuery,
   setRoomTypeFilter,
-  sethSearchQuery,
+  setSearchQuery,
 }) => {
   const router = useRouter();
 
@@ -22,7 +22,7 @@ const Search: FC<Props> = ({
   };
 
   const handleSearchQueryChange = (event: ChangeEvent<HTMLInputElement>) => {
-    sethSearchQuery(event.target.value);
+    setSearchQuery(event.target.value);
   };
 
   const handleFilterClick = () => {
