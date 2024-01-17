@@ -10,8 +10,8 @@ const Gallery = () => {
               alt="gallery"
               className="img"
               src="/images/hero-1.jpeg"
-              width={200}
-              height={200}
+              width={400}
+              height={400}
             />
           </div>
           <div className="w-1/2 p-1 md:p-2 h-48">
@@ -19,8 +19,8 @@ const Gallery = () => {
               alt="gallery"
               className="img"
               src="/images/hero-2.jpeg"
-              width={200}
-              height={200}
+              width={400}
+              height={400}
             />
           </div>
           <div className="w-full p-1 md:p-2 h-48">
@@ -28,8 +28,8 @@ const Gallery = () => {
               alt="gallery"
               className="img"
               src="/images/hero-3.jpeg"
-              width={200}
-              height={200}
+              width={400}
+              height={400}
             />
           </div>
         </div>
@@ -39,8 +39,8 @@ const Gallery = () => {
               alt="gallery"
               className="img"
               src="/images/hero-1.jpeg"
-              width={200}
-              height={200}
+              width={400}
+              height={400}
             />
           </div>
           <div className="w-1/2 p-1 md:p-2 h-48">
@@ -48,8 +48,8 @@ const Gallery = () => {
               alt="gallery"
               className="img"
               src="/images/hero-2.jpeg"
-              width={200}
-              height={200}
+              width={400}
+              height={400}
             />
           </div>
           <div className="w-1/2 p-1 md:p-2 h-48">
@@ -57,8 +57,8 @@ const Gallery = () => {
               alt="gallery"
               className="img"
               src="/images/hero-3.jpeg"
-              width={200}
-              height={200}
+              width={400}
+              height={400}
             />
           </div>
         </div>

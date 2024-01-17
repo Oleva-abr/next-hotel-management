@@ -16,8 +16,8 @@ export const section2 = (
         <Image
           src="/images/hero-1.jpeg"
           alt="hero-1"
-          width={300}
-          height={300}
+          width={600}
+          height={600}
           className="img scale-animation"
         />
       </div>
