@@ -8,11 +8,18 @@ import { MdOutlineCleaningServices } from "react-icons/md";
 import { LiaFireExtinguisherSolid } from "react-icons/lia";
 import { AiOutlineMedicineBox } from "react-icons/ai";
 import { GiSmokeBomb } from "react-icons/gi";
+import BookRoomCta from "@/components/BookRoomCta/BookRoomCta";
+import { useState } from "react";
 
 const RoomDetails = (props: { params: { slug: string } }) => {
   const {
     params: { slug },
   } = props;
+
+  const [checkinDate, setCheckinDate] = useState<Date | null>(null);
+  const [checkoutDate, setCheckoutDate] = useState<Date | null>(null);
+  const [adults, setAdults] = useState(1);
+  const [numOfchildren, setNumOfchildren] = useState(0);
 
   const fetchRoom = async () => getRoom(slug);
   const { data: room, error, isLoading } = useSWR("/api/room", fetchRoom);
@@ -22,6 +29,15 @@ const RoomDetails = (props: { params: { slug: string } }) => {
     throw new Error("Cant fetch data");
 
   if (!room) return <LoadingSpinner />;
+
+  const calcMinCheckoutDate = () => {
+    if (checkinDate) {
+      const nextDay = new Date(checkinDate);
+      nextDay.setDate(nextDay.getDate() + 1);
+      return nextDay;
+    }
+    return null;
+  };
   return (
     <div>
       <HotelPhotoGallery photos={room.images} />
@@ -99,9 +115,22 @@ const RoomDetails = (props: { params: { slug: string } }) => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="md:col-span-4 rounded-xl shadow-lg dark:shadow dark:shadow-white sticky top-10 h-fit overflow-auto">
-          {/* Book room cta */}
+          <div className="md:col-span-4 rounded-xl shadow-lg dark:shadow dark:shadow-white sticky top-10 h-fit overflow-auto">
+            <BookRoomCta
+              discount={room.discount}
+              price={room.price}
+              specialNote={room.specialNote}
+              checkinDate={checkinDate}
+              setCheckinDate={setCheckinDate}
+              checkoutDate={checkoutDate}
+              setCheckoutDate={setCheckoutDate}
+              calcMinCheckoutDate={calcMinCheckoutDate}
+              adults={adults}
+              numOfchildren={numOfchildren}
+              setAdults={setAdults}
+              setNumOfchildren={setNumOfchildren}
+            />
+          </div>
         </div>
       </div>
     </div>
