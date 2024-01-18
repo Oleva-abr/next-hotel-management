@@ -31,7 +31,7 @@ export type Room = {
     isfeatures: boolean;
     name: string;
     numberOfBeds: number;
-    amenity: Amenity[];
+    offeredAmenities: Amenity[];
     price: number;
     slug: Slug;
     specialNode: string;
