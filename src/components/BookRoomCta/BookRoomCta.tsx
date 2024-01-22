@@ -17,6 +17,8 @@ type Props = {
   numOfchildren: number;
   setAdults: Dispatch<SetStateAction<number>>;
   setNumOfchildren: Dispatch<SetStateAction<number>>;
+  isBooked: boolean;
+  handleBookNowClick: () => void;
 };
 
 const BookRoomCta: FC<Props> = (props) => {
@@ -33,6 +35,8 @@ const BookRoomCta: FC<Props> = (props) => {
     setNumOfchildren,
     adults,
     numOfchildren,
+    isBooked,
+    handleBookNowClick,
   } = props;
 
   const discountPrice = price - (price / 100) * discount;
@@ -141,6 +145,13 @@ const BookRoomCta: FC<Props> = (props) => {
       ) : (
         <></>
       )}
+      <button
+        disabled={isBooked}
+        onClick={handleBookNowClick}
+        className="btn-primary w-full mt-6 disabled:bg-gray-500  disabled:cursor-not-allowed"
+      >
+        {isBooked ? "Booked" : "Book Now"}
+      </button>
     </div>
   );
 };
