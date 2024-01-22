@@ -2,6 +2,7 @@ import { getRoom } from "@/libs/apis";
 import { authOptions } from "@/libs/auth";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -20,6 +21,8 @@ type Requestdata = {
 
 export async function POST(req: Request, res: Response) {
     const { checkinDate, adults, checkoutDate, children, hotelRoomSlug, numberOfDays }: Requestdata = await req.json();
+
+
     if (!checkinDate || !checkoutDate || !adults || !hotelRoomSlug || !numberOfDays) {
         return new NextResponse("Please all fielda are required", { status: 400 })
     }
@@ -41,10 +44,35 @@ export async function POST(req: Request, res: Response) {
 
     try {
         const room = await getRoom(hotelRoomSlug)
+
         const discountPrice = room.price - (room.price / 100) * room.discount
         const totalPrice = discountPrice * numberOfDays
 
         //create stripe payment
+
+        const stripeSession = await stripe.checkout.sessions.create({
+            mode: "payment",
+            line_items: [
+                {
+                    quantity: 1,
+                    price_data: {
+                        currency: 'usd',
+                        product_data: {
+                            name: room.name,
+                            images: room.images.map(image => image.url)
+                        },
+                        unit_amount: parseInt((totalPrice * 100).toString())
+                    }
+
+                }
+            ],
+            payment_method_types: ['card'],
+            success_url: `${origin}/users/${userId}`
+        })
+        return NextResponse.json(stripeSession, {
+            status: 200,
+            statusText: "Payment session created",
+        })
     } catch (error: any) {
         console.log("Paiment failed", error)
         return new NextResponse(error, { status: 5000 })
