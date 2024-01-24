@@ -15,15 +15,15 @@ type Requestdata = {
     checkoutDate: string;
     adults: number;
     children: number;
-    numberOfDays: number;
+    numberOfdays: number;
     hotelRoomSlug: string
 }
 
 export async function POST(req: Request, res: Response) {
-    const { checkinDate, adults, checkoutDate, children, hotelRoomSlug, numberOfDays }: Requestdata = await req.json();
+    const { checkinDate, adults, checkoutDate, children, hotelRoomSlug, numberOfdays }: Requestdata = await req.json();
 
 
-    if (!checkinDate || !checkoutDate || !adults || !hotelRoomSlug || !numberOfDays) {
+    if (!checkinDate || !checkoutDate || !adults || !hotelRoomSlug || !numberOfdays) {
         return new NextResponse("Please all fielda are required", { status: 400 })
     }
 
@@ -46,7 +46,7 @@ export async function POST(req: Request, res: Response) {
         const room = await getRoom(hotelRoomSlug)
 
         const discountPrice = room.price - (room.price / 100) * room.discount
-        const totalPrice = discountPrice * numberOfDays
+        const totalPrice = discountPrice * numberOfdays
 
         //create stripe payment
 
@@ -67,14 +67,28 @@ export async function POST(req: Request, res: Response) {
                 }
             ],
             payment_method_types: ['card'],
-            success_url: `${origin}/users/${userId}`
-        })
+            success_url: `${origin}/users/${userId}`,
+            metadata: {
+                adults,
+                checkinDate: formattedCheckinDate,
+                checkoutDate: formattedCheckoutDate,
+                children,
+                hotelRoom: room._id,
+                numberOfdays,
+                user: userId,
+                discount: room.discount,
+                totalPrice
+
+            }
+        });
+
         return NextResponse.json(stripeSession, {
             status: 200,
             statusText: "Payment session created",
         })
+
     } catch (error: any) {
         console.log("Paiment failed", error)
-        return new NextResponse(error, { status: 5000 })
+        return new NextResponse(error, { status: 500 })
     }
 }
