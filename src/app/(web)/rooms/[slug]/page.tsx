@@ -23,7 +23,7 @@ const RoomDetails = (props: { params: { slug: string } }) => {
   const [checkinDate, setCheckinDate] = useState<Date | null>(null);
   const [checkoutDate, setCheckoutDate] = useState<Date | null>(null);
   const [adults, setAdults] = useState(1);
-  const [numOfchildren, setNumOfchildren] = useState(0);
+  const [numOfChildren, setNumOfChildren] = useState(0);
 
   const fetchRoom = async () => getRoom(slug);
 
@@ -55,8 +55,6 @@ const RoomDetails = (props: { params: { slug: string } }) => {
 
     const hotelRoomSlug = room.slug.current;
 
-    // Integrate Stripe
-
     const stripe = await getStripe();
 
     try {
@@ -64,7 +62,7 @@ const RoomDetails = (props: { params: { slug: string } }) => {
         checkinDate,
         checkoutDate,
         adults,
-        children: numOfchildren,
+        children: numOfChildren,
         numberOfDays,
         hotelRoomSlug,
       });
@@ -181,9 +179,9 @@ const RoomDetails = (props: { params: { slug: string } }) => {
               setCheckoutDate={setCheckoutDate}
               calcMinCheckoutDate={calcMinCheckoutDate}
               adults={adults}
-              numOfchildren={numOfchildren}
+              numOfchildren={numOfChildren}
               setAdults={setAdults}
-              setNumOfchildren={setNumOfchildren}
+              setNumOfchildren={setNumOfChildren}
               isBooked={room.isBooked}
               handleBookNowClick={handleBookNowClick}
             />
