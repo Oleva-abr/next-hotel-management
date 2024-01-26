@@ -12,6 +12,7 @@ import { BsJournalBookmarkFill } from "react-icons/bs";
 import { useState } from "react";
 import { GiMoneyStack } from "react-icons/gi";
 import Table from "@/components/Table/Table";
+import Chart from "@/components/Chart/Chart";
 
 const UserDetails = (props: { params: { id: string } }) => {
   const {
@@ -137,26 +138,16 @@ const UserDetails = (props: { params: { id: string } }) => {
                 </a>
               </li>
             </ol>
-            {/* <ol
-              className={`${
-                currentNav === "raitings" ? "text-blue-600" : "text-gry-700"
-              } inline-flex mr-1 md:mr-5 item-center space-x-1 md:space-x-3`}
-            >
-              <li
-                onClick={() => setCurrentNav("raitings")}
-                className="inline-flex items-center cursor-pointer"
-              >
-                <BsJournalBookmarkFill />
-                <a className="inline-flex items-center mx-1 md:mx-2 text-xs md:text-sm font-medium">
-                  Current Bookings
-                </a>
-              </li>
-            </ol> */}
           </nav>
           {currentNav === "bookings" ? (
             userBookings && (
               <Table bookingDetails={userBookings} setRoomId={setRoomId} />
             )
+          ) : (
+            <></>
+          )}
+          {currentNav === "amount" ? (
+            userBookings && <Chart userBookings={userBookings} />
           ) : (
             <></>
           )}
