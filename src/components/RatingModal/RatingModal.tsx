@@ -3,15 +3,26 @@ import { BsStarFill } from "react-icons/bs";
 
 type Props = {
   isOpen: boolean;
-  ratingValue: number;
-  setRatingValue: Dispatch<SetStateAction<number>>;
+  ratingValue: number | null;
+  setRatingValue: Dispatch<SetStateAction<number | null>>;
   ratingText: string;
   setRatingText: Dispatch<SetStateAction<string>>;
+  reviewSubmitHendler: () => Promise<string | undefined>;
+  isSubmittingReview: boolean;
+  toggleRatingModal: () => void;
 };
 
 const RatingModal: FC<Props> = (props) => {
-  const { isOpen, ratingValue, setRatingValue, ratingText, setRatingText } =
-    props;
+  const {
+    isOpen,
+    ratingValue,
+    setRatingValue,
+    ratingText,
+    setRatingText,
+    reviewSubmitHendler,
+    isSubmittingReview,
+    toggleRatingModal,
+  } = props;
 
   const startValues = [1, 2, 3, 4, 5];
   return (
@@ -54,6 +65,21 @@ const RatingModal: FC<Props> = (props) => {
             rows={4}
             className="w-full px-2 py-3 border rounded-md"
           ></textarea>
+        </div>
+        <div className="flex justify-end">
+          <button
+            onClick={reviewSubmitHendler}
+            className="px-4 py-2 bg-primary text-white rounded-md"
+            disabled={isSubmittingReview}
+          >
+            {isSubmittingReview ? "Submitting" : "Submit"}
+          </button>
+          <button
+            onClick={toggleRatingModal}
+            className="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>

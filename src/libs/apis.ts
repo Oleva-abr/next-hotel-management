@@ -99,3 +99,16 @@ export async function getUserData(userId: string) {
     const result = await sanityClient.fetch(queries.getUserDataQuery, { userId }, { cache: "no-cache" })
     return result
 }
+
+export async function checkReviewExist(userId: string, hotelRoomId: string): Promise<null | { _id: string }> {
+    const query = `*[type] =='review' && user._ref == $userId && hotelRoom._ref == $hotelRoomId] [0] {_id}`
+
+    const params = {
+        userId,
+        hotelRoomId
+    }
+
+    const result = await sanityClient.fetch(query, params)
+
+    return result ? result : null;
+}
