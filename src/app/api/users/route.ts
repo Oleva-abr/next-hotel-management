@@ -1,4 +1,4 @@
-import { checkReviewExist, getUserData } from "@/libs/apis";
+import { checkReviewExist, createReview, getUserData, updateReview } from "@/libs/apis";
 import { authOptions } from "@/libs/auth";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -38,11 +38,11 @@ export async function POST(req: Request, res: Response) {
         const alreadyExist = await checkReviewExist(userId, roomId)
         let data
         if (alreadyExist) {
-
+            data = await updateReview({ reviewId: alreadyExist._id, reviewText, userRating: ratingValue })
         } else {
-
+            data = await createReview({ hotelroomId: roomId, reviewText, userId, userRating: ratingValue })
         }
-
+        return NextResponse.json(data, { status: 200, statusText: "Successful" })
     } catch (error: any) {
         console.log("Error Updating", error)
         return new NextResponse("Unable to create review", { status: 400 })
