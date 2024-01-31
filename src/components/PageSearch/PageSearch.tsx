@@ -10,7 +10,7 @@ const PageSearch = () => {
       roomTypeFilter={roomTypeFilter}
       searchQuery={searchQuery}
       setRoomTypeFilter={setRoomTypeFilter}
-      sethSearchQuery={sethSearchQuery}
+      setSearchQuery={sethSearchQuery}
     />
   );
 };
